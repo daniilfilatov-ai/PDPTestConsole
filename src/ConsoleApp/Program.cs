@@ -1,4 +1,5 @@
 ﻿using Application.Interfaces;
+using Domain.Models;
 using Infrastructure.PeopleData;
 using Infrastructure.Service;
 using Microsoft.Extensions.Configuration;
@@ -17,9 +18,9 @@ var services = new ServiceCollection()
         builder.AddConsole();
     })
     .AddTransient<IFileReader<string>, PeopleReader>()
-    .AddTransient<IDataMapper<string, string>, PeopleMapper>()
-    .AddTransient<IFileWriter<string>, PeopleWriter>()
-    .AddTransient<IDataService, FileDataService<string, string>>()
+    .AddTransient<IDataMapper<string, Person>, PeopleMapper>()
+    .AddTransient<IFileWriter<Person>, PeopleWriter>()
+    .AddTransient<IDataService, FileDataService<string, Person>>()
     .BuildServiceProvider();
 
 var logger = services.GetRequiredService<ILogger<Program>>();

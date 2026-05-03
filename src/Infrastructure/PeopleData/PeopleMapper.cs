@@ -1,14 +1,15 @@
 ﻿using Application.Interfaces;
+using Domain.Models;
 using Microsoft.Extensions.Logging;
 
 namespace Infrastructure.PeopleData;
 
-public sealed class PeopleMapper(ILogger<PeopleMapper> logger) : IDataMapper<string, string>
+public sealed class PeopleMapper(ILogger<PeopleMapper> logger) : IDataMapper<string, Person>
 {
-    public IEnumerable<string> DataMapper(IEnumerable<string> rawData)
+    public IEnumerable<Person> DataMapper(IEnumerable<string> rawData)
     {
         logger.LogInformation("Started mapping data");
-        var people = new List<string>();
+        var people = new List<Person>();
         var invalidData = new List<string>();
         foreach (var item in rawData)
         {
@@ -22,8 +23,12 @@ public sealed class PeopleMapper(ILogger<PeopleMapper> logger) : IDataMapper<str
                 {
                     throw new Exception();
                 }
-                var personData = $"{firstName} {lastName} ({age})";
-                people.Add(personData);
+                people.Add(new Person
+                {
+                    FirstName = firstName,
+                    LastName = lastName,
+                    Age = age
+                });
             }
             catch
             {
