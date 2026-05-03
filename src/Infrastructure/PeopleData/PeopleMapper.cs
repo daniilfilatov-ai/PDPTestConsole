@@ -1,9 +1,5 @@
 ﻿using Application.Interfaces;
-using Domain.Models;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Infrastructure.PeopleData;
 

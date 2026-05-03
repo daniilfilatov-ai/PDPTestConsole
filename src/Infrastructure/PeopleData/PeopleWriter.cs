@@ -1,9 +1,5 @@
 ﻿using Application.Interfaces;
-using Domain.Models;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Infrastructure.PeopleData;
 
@@ -11,6 +7,10 @@ public sealed class PeopleWriter(ILogger<PeopleWriter> logger) : IFileWriter<str
 {
     public async Task WriteAsync(IEnumerable<string> people, string outputFilePath, CancellationToken cancellationToken = default)
     {
+        if (!File.Exists(outputFilePath))
+        {
+            throw new FileNotFoundException("Output file not found");
+        }
         logger.LogInformation("Started write data");
         await File.WriteAllLinesAsync(outputFilePath, people, cancellationToken);
         logger.LogInformation("Writing complete");
