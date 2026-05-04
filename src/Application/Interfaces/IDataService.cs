@@ -2,5 +2,5 @@
 
 public interface IDataService
 {
-    Task ProcessAsync(string inputFilePath, string outputFilePath, CancellationToken cancellationToken = default);
+    Task <bool> ProcessAsync(string inputFilePath, string outputFilePath, CancellationToken cancellationToken = default);
 }

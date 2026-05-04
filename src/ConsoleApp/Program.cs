@@ -39,10 +39,18 @@ try
 
     using CancellationTokenSource cts = new();
     CancellationToken cancellationToken = cts.Token;
-
-    await processor.ProcessAsync(inputFilePath, outputFilePath, cancellationToken);
+    var isValidErrors = await processor.ProcessAsync(inputFilePath, outputFilePath, cancellationToken);
+    if (isValidErrors)
+    {
+        return 2;
+    }
+    else
+    {
+        return 0;
+    }
 }
 catch (Exception ex)
 {
     logger.LogError(ex, "An error occurred while processing people data");
+    return 1;
 }

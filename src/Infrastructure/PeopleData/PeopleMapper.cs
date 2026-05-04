@@ -1,5 +1,6 @@
 ﻿using Application.Interfaces;
 using Domain.Models;
+using Infrastructure.PeopleData.Extensions;
 using Microsoft.Extensions.Logging;
 
 namespace Infrastructure.PeopleData;
@@ -15,20 +16,7 @@ public sealed class PeopleMapper(ILogger<PeopleMapper> logger) : IDataMapper<str
         {
             try
             {
-                var stringParts = item.Split(";");
-                var firstName = stringParts[0].ToUpper();
-                var lastName = stringParts[1].ToUpper();
-                var age = int.Parse(stringParts[2]);
-                if(!firstName.Any(Char.IsLetter) || !lastName.Any(Char.IsLetter) || age < 0)
-                {
-                    throw new Exception();
-                }
-                people.Add(new Person
-                {
-                    FirstName = firstName,
-                    LastName = lastName,
-                    Age = age
-                });
+                people.Add(item.ToPerson());
             }
             catch
             {
